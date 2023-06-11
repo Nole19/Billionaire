@@ -2,7 +2,7 @@ import openai
 import json
 
 
-openai.api_key = "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"
+openai.api_key = "Your API Key"
 completion = openai.ChatCompletion.create(model="gpt-3.5-turbo",
                                           messages=[
         {"role": "user", "content": ''' Create 15 questions quiz with 4 answers for each question. Theme should be Python. 
