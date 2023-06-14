@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter.ttk import Progressbar
 # from questions import *
 from progress import *
+import random
 
 
 all_questions = ["Which is the largest country in the world?",
@@ -161,6 +163,20 @@ class MillionaireGame:
                                   activeforeground='black', cursor="hand2")
         self.button_d.grid(row=2, column=3, pady=4)
 
+        """Creating list for choices for the function of 50_50 button"""
+        self.choices = [self.button_a, self.button_b, self.button_c, self.button_d]
+
+        """Creating audience(That's why we need to import tkinter.tkk)"""
+        self.audience_progressbar_a = Progressbar(root, orient=VERTICAL, length=100)
+        self.audience_progressbar_b = Progressbar(root, orient=VERTICAL, length=100)
+        self.audience_progressbar_c = Progressbar(root, orient=VERTICAL, length=100)
+        self.audience_progressbar_d = Progressbar(root, orient=VERTICAL, length=100)
+
+        self.audience_progressbar_a_label = Label(root, text="A", font=("arial", 23, "bold"), bg="black", fg="white")
+        self.audience_progressbar_b_label = Label(root, text="B", font=("arial", 23, "bold"), bg="black", fg="white")
+        self.audience_progressbar_c_label = Label(root, text="C", font=("arial", 23, "bold"), bg="black", fg="white")
+        self.audience_progressbar_d_label = Label(root, text="D", font=("arial", 23, "bold"), bg="black", fg="white")
+
         """Creating winning images"""
         self.images = []
         self.images = []
@@ -192,6 +208,16 @@ class MillionaireGame:
         """Shows us which button clicked"""
         b = event.widget
         value = b['text']
+        """Deleting audience """
+        self.audience_progressbar_a.place_forget()
+        self.audience_progressbar_b.place_forget()
+        self.audience_progressbar_c.place_forget()
+        self.audience_progressbar_d.place_forget()
+
+        self.audience_progressbar_a_label.place_forget()
+        self.audience_progressbar_b_label.place_forget()
+        self.audience_progressbar_c_label.place_forget()
+        self.audience_progressbar_d_label.place_forget()
         """Loop to run every time questions"""
         for k in range(15):
             if value == correct_answer[k]:
@@ -218,6 +244,15 @@ class MillionaireGame:
         image_50_50_x = tk.PhotoImage(file="images/50-50-X.png")
         canvas.create_image(90, 40, image=image_50_50_x)
         canvas.image = image_50_50_x
+        """Randomly deleting 2 numbers"""
+        for d in range(2):
+            random_choice = random.randint(0, 3)
+            if self.choices[random_choice].cget("text") not in correct_answer:
+                self.choices[random_choice].config(text='')
+                self.choices.pop(random_choice)
+            else:
+                self.choices[random_choice - 1].config(text='')
+                self.choices.pop(random_choice - 1)
 
     def change_audience(self):
         """Changes audience pictures"""
@@ -227,6 +262,39 @@ class MillionaireGame:
         image_audience_x = tk.PhotoImage(file="images/audiencePoleX.png")
         canvas.create_image(90, 40, image=image_audience_x)
         canvas.image = image_audience_x
+        """Placing audience"""
+        self.audience_progressbar_a.place(x=750, y=190)
+        self.audience_progressbar_b.place(x=790, y=190)
+        self.audience_progressbar_c.place(x=830, y=190)
+        self.audience_progressbar_d.place(x=870, y=190)
+        self.audience_progressbar_a_label.place(x=750, y=320)
+        self.audience_progressbar_b_label.place(x=790, y=320)
+        self.audience_progressbar_c_label.place(x=830, y=320)
+        self.audience_progressbar_d_label.place(x=870, y=320)
+        """Logic"""
+        for answer in self.choices:
+            if answer.cget("text") in correct_answer:
+                if answer.cget("text") in first_option:
+                    self.audience_progressbar_a.config(value=76)
+                    self.audience_progressbar_b.config(value=27)
+                    self.audience_progressbar_c.config(value=34)
+                    self.audience_progressbar_d.config(value=19)
+                elif answer.cget("text") in second_option:
+                    self.audience_progressbar_b.config(value=76)
+                    self.audience_progressbar_a.config(value=27)
+                    self.audience_progressbar_c.config(value=34)
+                    self.audience_progressbar_d.config(value=19)
+                elif answer.cget("text") in third_option:
+                    self.audience_progressbar_c.config(value=76)
+                    self.audience_progressbar_b.config(value=27)
+                    self.audience_progressbar_a.config(value=34)
+                    self.audience_progressbar_d.config(value=19)
+                elif answer.cget("text") in fourth_option:
+                    self.audience_progressbar_d.config(value=76)
+                    self.audience_progressbar_b.config(value=27)
+                    self.audience_progressbar_c.config(value=34)
+                    self.audience_progressbar_a.config(value=19)
+                break
 
     def change_phone(self):
         """Changing hone call picture"""
