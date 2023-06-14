@@ -2,10 +2,11 @@ import openai
 import json
 
 
-openai.api_key = "Your API Key"
+openai.api_key = "Your API key"
 completion = openai.ChatCompletion.create(model="gpt-3.5-turbo",
                                           messages=[
-        {"role": "user", "content": ''' Create 15 questions quiz with 4 answers for each question. Theme should be Python. 
+        {"role": "user", "content": ''' Create 15 questions quiz with 4 answers for each question. 
+         Theme should be Python and become harder to the end. Last one is the hardest. 
         It should looks like this{
           "questions": [
             {
@@ -56,10 +57,6 @@ for i in range(15):
     correct_answer.append(data_list[i]['answer'])
 
 print(all_questions)
-# print(first_option)
-# print(second_option)
-# print(third_option)
-# print(fourth_option)
 print(correct_answer)
 
 
