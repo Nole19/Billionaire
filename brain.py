@@ -1,19 +1,68 @@
 import tkinter as tk
+# from questions import *
+from progress import *
+
+
+all_questions = ["Which is the largest country in the world?",
+             "How many days are there in a leap year?",
+             "Which one of these four birds has the longest beak and feet?",
+             "What is the national currency of the United States of America (USA)?",
+             "Guido van Rossum in 1991 designed which language?",
+             "Finish the sequence: 9, 18, 27, _?",
+             "Which one is the first fully supported 64-bit operating system?",
+             "Which animal is called the king of the jungle?",
+             "what time corresponds to 23:23 hours ?",
+             "Which team has won most number of IPL matches ?",
+             "Which is the largest planet in our Solar system?",
+             "How many continents are there in the world?",
+             "How many years are there in one Millenium?",
+             "ipad is manufactured by?",
+             "Who founded Microsoft?"]
+
+first_option = ["India", "354",
+                "Heron", "Euro",
+                "Javascript", "36",
+                "Windows 7", "Elephant", "11:23PM", "KKR",
+                "Earth", "8",
+                "100 years", "Google", "Monty Ritz"]
+
+second_option = ["USA", "366",
+                 "Parrot", "Peso ",
+                 "Python", "34",
+                 "Linux", "Lion", "11.11PM", "CSK",
+                 "Uranus", "5",
+                 "50 years",
+                 "Microsoft", "Danis Lio"]
+
+third_option = ["China", "365",
+                "Crow", "Dollar",
+                "Java", "30",
+                "Mac", "Tiger", "7:23PM", "MI",
+                "Mars", "7",
+                "500 years",
+                "Amazon", "Bill Gates"]
+
+fourth_option = ["Russia", "420",
+                 "Pigeon", "Yen",
+                 "C++", "37",
+                 "Windows XP", "Cow", "9.11PM", "RCB",
+                 "Jupiter",
+                 "6",
+                 "1000 years", "Apple",
+                 "Jeff Bezos"]
+
+correct_answer = ["Russia", "366", "Heron", "Dollar", "Python", "36",
+                   "Linux", "Lion", "7:23PM", "MI", "Jupiter", "7", "1000 years", "Apple",
+                   "Bill Gates"]
 
 
 class MillionaireGame:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self, master):
+        self.root = master
         self.root.geometry("1352x652+0+0")
         self.root.title("Who wants to be an IT Millionaire created by Pavel Zenchanka")
         self.root.config(background='black')
 
-        self.create_frames()
-        self.create_labels()
-        self.create_buttons()
-        self.create_entries()
-
-    def create_frames(self):
         """Frames: Right and LEft -> top, middle, bottom"""
         self.frame = tk.Frame(self.root, bg='black')
         self.frame.grid()
@@ -33,7 +82,6 @@ class MillionaireGame:
         self.bottom_frame = tk.Frame(self.left_frame, bd=20, bg='black', width=900, height=200)
         self.bottom_frame.grid(row=2, column=0)
 
-    def create_labels(self):
         """Center image"""
         self.center_image = tk.PhotoImage(file="images/center.png")
         self.logo = tk.Label(self.middle_frame, image=self.center_image, bg="black", width=300, height=200)
@@ -43,7 +91,6 @@ class MillionaireGame:
         self.amount_label = tk.Label(self.right_frame, image=self.amount_image, bg='black', bd=0, width=430, height=600)
         self.amount_label.grid(row=0, column=0)
 
-    def create_buttons(self):
         """Creating 3 buttons"""
         self.image50_50 = tk.PhotoImage(file="images/50-50.png")
         self.lifeline_50_50_Button = tk.Button(self.top_frame, image=self.image50_50, bg='black', bd=0,
@@ -63,26 +110,105 @@ class MillionaireGame:
                                                      height=80)
         self.lifeline_image_phone_Button.grid(row=0, column=2)
 
-    def create_entries(self):
-        """Question pannel"""
-        self.question = tk.Entry(self.bottom_frame, font=("Arial", 18, "bold"), bg="blue", fg="white", bd=5,
-                                 width=44, justify=tk.CENTER)
-        self.question.grid(row=0, column=0, columnspan=4, pady=4)
-        """4 options to answer"""
-        self.create_answer("A", 1, 0)
-        self.create_answer("B", 1, 2)
-        self.create_answer("C", 2, 0)
-        self.create_answer("D", 2, 2)
+        """Question panel"""
+        self.question_entry = tk.Entry(self.bottom_frame, font=("Arial", 18, "bold"), bg="blue", fg="white", bd=5,
+                                       width=44, justify=tk.CENTER)
+        self.question_entry.grid(row=0, column=0, columnspan=4, pady=4)
 
-    def create_answer(self, label_text, row, column):
-        """Creating option of answer"""
-        answer_label = tk.Label(self.bottom_frame, font=("Arial", 14, "bold"), text=f"{label_text}:", bg="black",
-                                fg="white", bd=5, justify="left")
-        answer_label.grid(row=row, column=column, pady=4, sticky=tk.W)
+        self.question_label = tk.Label(self.bottom_frame, font=("arial", 18, "bold"), bg="blue", fg="white", bd=5,
+                                       width=44, justify=tk.CENTER, text=all_questions[0])
+        self.question_label.grid(row=0, column=0, columnspan=4, pady=4)
+        """Answers"""
+        """a"""
+        self.answer_a = tk.Label(self.bottom_frame, font=("arial", 14, "bold"), text="A:", bg="black", fg="white", bd=5,
+                                 justify=tk.CENTER)
+        self.answer_a.grid(row=1, column=0, pady=4, sticky=tk.W)  # <----west
 
-        button = tk.Button(self.bottom_frame, font=("Arial", 14, "bold"), bg="blue", fg="white", bd=1, width=17,
-                           height=2, justify=tk.CENTER)
-        button.grid(row=row, column=column + 1, pady=4)
+        self.button_a = tk.Button(self.bottom_frame, font=("arial", 14, "bold"), bg="blue", fg="white", bd=1, width=30,
+                                  height=2, justify=tk.CENTER, text=first_option[0], activebackground="blue",
+                                  activeforeground='black', cursor="hand2")
+        self.button_a.grid(row=1, column=1, pady=4)
+
+        """b"""
+        self.answer_b = tk.Label(self.bottom_frame, font=("arial", 14, "bold"), text="B:", bg="black", fg="white", bd=5,
+                                 justify=tk.LEFT)
+        self.answer_b.grid(row=1, column=2, pady=4, sticky=tk.W)
+
+        self.button_b = tk.Button(self.bottom_frame, font=("arial", 14, "bold"), bg="blue", fg="white", bd=1, width=30,
+                                  height=2, justify=tk.CENTER, text=second_option[0], activebackground="blue",
+                                  activeforeground='black', cursor="hand2")
+        self.button_b.grid(row=1, column=3, pady=4)
+
+        """c"""
+
+        self.answer_c = tk.Label(self.bottom_frame, font=("arial", 14, "bold"), text="C:", bg="black", fg="white", bd=5,
+                                 justify=tk.LEFT)
+        self.answer_c.grid(row=2, column=0, pady=4, sticky=tk.W)
+
+        self.button_c = tk.Button(self.bottom_frame, font=("arial", 14, "bold"), bg="blue", fg="white", bd=1, width=30,
+                                  height=2, justify=tk.CENTER, text=third_option[0], activebackground="blue",
+                                  activeforeground='black', cursor="hand2")
+        self.button_c.grid(row=2, column=1, pady=4)
+
+        """d"""
+
+        self.answer_d = tk.Label(self.bottom_frame, font=("arial", 14, "bold"), text="D:", bg="black", fg="white", bd=5,
+                                 justify=tk.LEFT)
+        self.answer_d.grid(row=2, column=2, pady=4, sticky=tk.W)
+
+        self.button_d = tk.Button(self.bottom_frame, font=("arial", 14, "bold"), bg="blue", fg="white", bd=1, width=30,
+                                  height=2, justify=tk.CENTER, text=fourth_option[0], activebackground="blue",
+                                  activeforeground='black', cursor="hand2")
+        self.button_d.grid(row=2, column=3, pady=4)
+
+        """Creating winning images"""
+        self.images = []
+        self.images = []
+        image1 = tk.PhotoImage(file='images/Picture1.png')
+        image2 = tk.PhotoImage(file='images/Picture2.png')
+        image3 = tk.PhotoImage(file='images/Picture3.png')
+        image4 = tk.PhotoImage(file='images/Picture4.png')
+        image5 = tk.PhotoImage(file='images/Picture5.png')
+        image6 = tk.PhotoImage(file='images/Picture6.png')
+        image7 = tk.PhotoImage(file='images/Picture7.png')
+        image8 = tk.PhotoImage(file='images/Picture8.png')
+        image9 = tk.PhotoImage(file='images/Picture9.png')
+        image10 = tk.PhotoImage(file='images/Picture10.png')
+        image11 = tk.PhotoImage(file='images/Picture11.png')
+        image12 = tk.PhotoImage(file='images/Picture12.png')
+        image13 = tk.PhotoImage(file='images/Picture13.png')
+        image14 = tk.PhotoImage(file='images/Picture14.png')
+        image15 = tk.PhotoImage(file='images/Picture15.png')
+        self.images = [image1, image2, image3, image4, image5, image6, image7, image8, image9, image10, image11,
+                       image12, image13, image14, image15]
+
+        """Creating initialization of clicking particular button with left button of mouth"""
+        self.button_a.bind('<Button-1>', self.select)
+        self.button_b.bind('<Button-1>', self.select)
+        self.button_c.bind('<Button-1>', self.select)
+        self.button_d.bind('<Button-1>', self.select)
+
+    def select(self, event):
+        """Shows us which button clicked"""
+        b = event.widget
+        value = b['text']
+        """Loop to run every time questions"""
+        for k in range(15):
+            if value == correct_answer[k]:
+                if value == correct_answer[14]:
+                    root_3 = QuizResultWindow(root, "Victory! Cash waiting!!")
+                    root_3.show_result_window()
+                    break
+                self.question_label.config(text=all_questions[k + 1])
+                self.button_a.config(text=first_option[k + 1])
+                self.button_b.config(text=second_option[k + 1])
+                self.button_c.config(text=third_option[k + 1])
+                self.button_d.config(text=fourth_option[k + 1])
+                self.amount_label.config(image=self.images[k])
+            if value not in correct_answer:
+                root_2 = QuizResultWindow(root, "You lose")
+                root_2.show_result_window()
+                break
 
     def change_50_50(self):
         """Changes 50_50 pictures """
@@ -110,14 +236,6 @@ class MillionaireGame:
         image_phone_x = tk.PhotoImage(file="images/phoneAFriendX.png")
         canvas.create_image(90, 40, image=image_phone_x)
         canvas.image = image_phone_x
-
-    def change_million_picture(self):
-        canvas = tk.Canvas(self.right_frame, bg="black", width=430, height=600)
-        canvas.grid(row=0, column=0)
-        canvas.delete("all")
-        image_1 = tk.PhotoImage(file=f"images/Picture1.png")
-        canvas.create_image(215, 300, image=image_1)
-        canvas.image = image_1
 
 
 if __name__ == "__main__":
