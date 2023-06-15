@@ -13,7 +13,7 @@ class QuizResultWindow:
         self.root.destroy()
 
     def show_result_window(self):
-
+        """Adding 2 windows for the result"""
         self.root_2 = Toplevel()
         self.root_2.config(bg="black")
         self.root_2.geometry("500x400+140+30")
@@ -26,10 +26,6 @@ class QuizResultWindow:
                       fg="white")
         label.pack()
 
-        # try_again_button = Button(self.root_2, text="Try again", font=("arial", 20, "bold"),
-        #                           bg="black", fg="white", bd=0, activebackground="black", cursor="hand2",
-        #                           activeforeground="white")
-        # try_again_button.pack()
         close_button = Button(self.root_2, text="Close", font=("arial", 20, "bold"),
                               bg="black", fg="white", bd=0, activebackground="black", cursor="hand2",
                               activeforeground="white", command=self.close_window)
@@ -51,43 +47,3 @@ class QuizResultWindow:
 
         self.root_2.mainloop()
 
-
-
-
-# class Progress():
-#     def __init__(self, main):
-#         self.main = main
-#         self.main.config(bg="black")
-#         self.main.geometry("500x400+140+30")
-#         self.main.title("You won 0 pounds")
-#         self.central_image = tk.PhotoImage(file="images/center.png")
-#         """Images in new window"""
-#         self.image_label = tk.Label(self.main, image=self.central_image, bd=0)
-#         self.image_label.pack(pady=30)
-#
-#         self.win_label = tk.Label(self.main, text="Victory! Cash waiting!!", font=("arial", 30, "bold"), bg="black",
-#                           fg="white")
-#         self.win_label.pack()
-#
-#         """Buttons"""
-#         self.try_again_button = tk.Button(self, text="Try again", font=("arial", 20, "bold"),
-#                                   bg="black", fg="white", bd=0, activebackground="black", cursor="hand2",
-#                                   activeforeground="white", command=self.try_again)
-#         self.try_again_button.pack()
-        # close_button = tk.Button(self.main, text="Close", font=("arial", 20, "bold"),
-        #                       bg="black", fg="white", bd=0, activebackground="black", cursor="hand2",
-        #                       activeforeground="white", command=self.close_window)
-        # close_button.pack()
-
-        # """Images"""
-        # happy_emoji_img = tk.PhotoImage(file="images/happy.png")
-        # self.happy_emoji_label = tk.Label(self.main, image=happy_emoji_img, bg="black")
-        # self.happy_emoji_label.place(x=30, y=280)
-        #
-        # self.happy_emoji_label_1 = tk.Label(self.main, image=happy_emoji_img, bg="black")
-        # self.happy_emoji_label_1.place(x=400, y=280)
-    #
-    # def close_window(self):
-    #     self.main.destroy()
-#
-#
