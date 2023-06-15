@@ -56,7 +56,6 @@ for i in range(15):
     fourth_option.append(data_list[i]['options'][3])
     correct_answer.append(data_list[i]['answer'])
 
-print(all_questions)
-print(correct_answer)
+
 
 
