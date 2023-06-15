@@ -1,67 +1,31 @@
 import tkinter as tk
 from tkinter.ttk import Progressbar
-# from questions import *
-from progress import *
+from questions import *
+from progress import QuizResultWindow
 import random
+from pygame import mixer
+import pyttsx3
 
 
-all_questions = ["Which is the largest country in the world?",
-             "How many days are there in a leap year?",
-             "Which one of these four birds has the longest beak and feet?",
-             "What is the national currency of the United States of America (USA)?",
-             "Guido van Rossum in 1991 designed which language?",
-             "Finish the sequence: 9, 18, 27, _?",
-             "Which one is the first fully supported 64-bit operating system?",
-             "Which animal is called the king of the jungle?",
-             "what time corresponds to 23:23 hours ?",
-             "Which team has won most number of IPL matches ?",
-             "Which is the largest planet in our Solar system?",
-             "How many continents are there in the world?",
-             "How many years are there in one Millenium?",
-             "ipad is manufactured by?",
-             "Who founded Microsoft?"]
+"""Initialize sounds"""
+mixer.init()
+mixer.music.load("images/hello.mp3")
+mixer.music.play()
 
-first_option = ["India", "354",
-                "Heron", "Euro",
-                "Javascript", "36",
-                "Windows 7", "Elephant", "11:23PM", "KKR",
-                "Earth", "8",
-                "100 years", "Google", "Monty Ritz"]
-
-second_option = ["USA", "366",
-                 "Parrot", "Peso ",
-                 "Python", "34",
-                 "Linux", "Lion", "11.11PM", "CSK",
-                 "Uranus", "5",
-                 "50 years",
-                 "Microsoft", "Danis Lio"]
-
-third_option = ["China", "365",
-                "Crow", "Dollar",
-                "Java", "30",
-                "Mac", "Tiger", "7:23PM", "MI",
-                "Mars", "7",
-                "500 years",
-                "Amazon", "Bill Gates"]
-
-fourth_option = ["Russia", "420",
-                 "Pigeon", "Yen",
-                 "C++", "37",
-                 "Windows XP", "Cow", "9.11PM", "RCB",
-                 "Jupiter",
-                 "6",
-                 "1000 years", "Apple",
-                 "Jeff Bezos"]
-
-correct_answer = ["Russia", "366", "Heron", "Dollar", "Python", "36",
-                   "Linux", "Lion", "7:23PM", "MI", "Jupiter", "7", "1000 years", "Apple",
-                   "Bill Gates"]
+"""Calling function with specific voice(pyttsx3)"""
+engine = pyttsx3.init(driverName='espeak')
+voices = engine.getProperty('voices')
+for voice in voices:
+    if "female" in voice.name.lower():
+        engine.setProperty("voice", voice.id)
+        break
 
 
 class MillionaireGame:
     def __init__(self, master):
+
         self.root = master
-        self.root.geometry("1352x652+0+0")
+        self.root.geometry("1452x652+0+0")
         self.root.title("Who wants to be an IT Millionaire created by Pavel Zenchanka")
         self.root.config(background='black')
 
@@ -90,7 +54,7 @@ class MillionaireGame:
         self.logo.grid()
         """Amount table"""
         self.amount_image = tk.PhotoImage(file='images/Picture0.png')
-        self.amount_label = tk.Label(self.right_frame, image=self.amount_image, bg='black', bd=0, width=430, height=600)
+        self.amount_label = tk.Label(self.right_frame, image=self.amount_image, bg='black', bd=0, width=400, height=600)
         self.amount_label.grid(row=0, column=0)
 
         """Creating 3 buttons"""
@@ -111,6 +75,11 @@ class MillionaireGame:
                                                      activebackground="black", command=self.change_phone, width=180,
                                                      height=80)
         self.lifeline_image_phone_Button.grid(row=0, column=2)
+
+        """Call button"""
+        self.call_image = tk.PhotoImage(file="images/phone.png")
+        self.call_button = tk.Button(root, image=self.call_image, bd=0, bg="black", activebackground="black",
+                                     cursor="hand2", command=self.phone_click)
 
         """Question panel"""
         self.question_entry = tk.Entry(self.bottom_frame, font=("Arial", 18, "bold"), bg="blue", fg="white", bd=5,
@@ -167,15 +136,15 @@ class MillionaireGame:
         self.choices = [self.button_a, self.button_b, self.button_c, self.button_d]
 
         """Creating audience(That's why we need to import tkinter.tkk)"""
-        self.audience_progressbar_a = Progressbar(root, orient=VERTICAL, length=100)
-        self.audience_progressbar_b = Progressbar(root, orient=VERTICAL, length=100)
-        self.audience_progressbar_c = Progressbar(root, orient=VERTICAL, length=100)
-        self.audience_progressbar_d = Progressbar(root, orient=VERTICAL, length=100)
+        self.audience_progressbar_a = Progressbar(root, orient=tk.VERTICAL, length=100)
+        self.audience_progressbar_b = Progressbar(root, orient=tk.VERTICAL, length=100)
+        self.audience_progressbar_c = Progressbar(root, orient=tk.VERTICAL, length=100)
+        self.audience_progressbar_d = Progressbar(root, orient=tk.VERTICAL, length=100)
 
-        self.audience_progressbar_a_label = Label(root, text="A", font=("arial", 23, "bold"), bg="black", fg="white")
-        self.audience_progressbar_b_label = Label(root, text="B", font=("arial", 23, "bold"), bg="black", fg="white")
-        self.audience_progressbar_c_label = Label(root, text="C", font=("arial", 23, "bold"), bg="black", fg="white")
-        self.audience_progressbar_d_label = Label(root, text="D", font=("arial", 23, "bold"), bg="black", fg="white")
+        self.audience_progressbar_a_label = tk.Label(root, text="A", font=("arial", 23, "bold"), bg="black", fg="white")
+        self.audience_progressbar_b_label = tk.Label(root, text="B", font=("arial", 23, "bold"), bg="black", fg="white")
+        self.audience_progressbar_c_label = tk.Label(root, text="C", font=("arial", 23, "bold"), bg="black", fg="white")
+        self.audience_progressbar_d_label = tk.Label(root, text="D", font=("arial", 23, "bold"), bg="black", fg="white")
 
         """Creating winning images"""
         self.images = []
@@ -208,7 +177,9 @@ class MillionaireGame:
         """Shows us which button clicked"""
         b = event.widget
         value = b['text']
-        """Deleting audience """
+        """Deleting audience and call button"""
+        self.call_button.place_forget()
+
         self.audience_progressbar_a.place_forget()
         self.audience_progressbar_b.place_forget()
         self.audience_progressbar_c.place_forget()
@@ -224,6 +195,8 @@ class MillionaireGame:
                 if value == correct_answer[14]:
                     root_3 = QuizResultWindow(root, "Victory! Cash waiting!!")
                     root_3.show_result_window()
+                    mixer.music.load("images/winner.mp3")
+                    mixer.music.play()
                     break
                 self.question_label.config(text=all_questions[k + 1])
                 self.button_a.config(text=first_option[k + 1])
@@ -304,6 +277,15 @@ class MillionaireGame:
         image_phone_x = tk.PhotoImage(file="images/phoneAFriendX.png")
         canvas.create_image(90, 40, image=image_phone_x)
         canvas.image = image_phone_x
+        self.call_button.place(x=70, y=260)
+        mixer.music.load("images/calling.mp3")
+        mixer.music.play()
+
+    def phone_click(self):
+        """Voice wit right answer"""
+        number_of_question = all_questions.index(self.question_label.cget("text"))
+        engine.say(f"I think that the answer is {correct_answer[number_of_question]}")
+        engine.runAndWait()
 
 
 if __name__ == "__main__":
