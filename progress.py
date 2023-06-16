@@ -1,4 +1,6 @@
 from tkinter import *
+from pygame import mixer
+import pyttsx3
 
 
 class QuizResultWindow:
@@ -46,4 +48,32 @@ class QuizResultWindow:
             sad_emoji_label_1.place(x=400, y=280)
 
         self.root_2.mainloop()
+
+
+class SoundPlayer:
+    def __init__(self):
+        mixer.init()
+
+    @staticmethod
+    def play_sound(file_path):
+        mixer.music.load(file_path)
+        mixer.music.play()
+
+
+class VoicePlayer:
+    def __init__(self):
+        self.engine = pyttsx3.init(driverName='espeak')
+        self.voices = self.engine.getProperty('voices')
+        self.selected_voice = None
+
+    def set_voice(self, voice_name):
+        for voice in self.voices:
+            if voice_name.lower() in voice.name.lower():
+                self.selected_voice = voice.id
+                self.engine.setProperty('voice', self.selected_voice)
+                break
+
+    def speak_text(self, text):
+        self.engine.say(text)
+        self.engine.runAndWait()
 

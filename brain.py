@@ -1,24 +1,10 @@
 import tkinter as tk
 from tkinter.ttk import Progressbar
-from questions import *
-from progress import QuizResultWindow
+# from questions import *
+from progress import QuizResultWindow, SoundPlayer, VoicePlayer
 import random
 from pygame import mixer
-import pyttsx3
-
-
-"""Initialize sounds"""
-mixer.init()
-mixer.music.load("images/hello.mp3")
-mixer.music.play()
-
-"""Calling function with specific voice(pyttsx3)"""
-engine = pyttsx3.init(driverName='espeak')
-voices = engine.getProperty('voices')
-for voice in voices:
-    if "female" in voice.name.lower():
-        engine.setProperty("voice", voice.id)
-        break
+from que import *
 
 
 class MillionaireGame:
@@ -195,8 +181,8 @@ class MillionaireGame:
                 if value == correct_answer[14]:
                     root_3 = QuizResultWindow(root, "Victory! Cash waiting!!")
                     root_3.show_result_window()
-                    mixer.music.load("images/winner.mp3")
-                    mixer.music.play()
+                    sound_player.play_sound("images/winner.mp3")
+                    self.amount_label.config(image=self.images[14])
                     break
                 self.question_label.config(text=all_questions[k + 1])
                 self.button_a.config(text=first_option[k + 1])
@@ -207,6 +193,11 @@ class MillionaireGame:
             if value not in correct_answer:
                 root_2 = QuizResultWindow(root, "You lose")
                 root_2.show_result_window()
+                self.question_label.config(state=tk.DISABLED)
+                self.button_a.config(state=tk.DISABLED)
+                self.button_b.config(state=tk.DISABLED)
+                self.button_c.config(state=tk.DISABLED)
+                self.button_d["state"] = "disabled"
                 break
 
     def change_50_50(self):
@@ -284,11 +275,14 @@ class MillionaireGame:
     def phone_click(self):
         """Voice wit right answer"""
         number_of_question = all_questions.index(self.question_label.cget("text"))
-        engine.say(f"I think that the answer is {correct_answer[number_of_question]}")
-        engine.runAndWait()
+        voice_player.speak_text(f"I think that the answer is {correct_answer[number_of_question]}")
 
 
 if __name__ == "__main__":
+    sound_player = SoundPlayer()
+    sound_player.play_sound("images/hello.mp3")
+    voice_player = VoicePlayer()
+    voice_player.set_voice("female")
     root = tk.Tk()
     game = MillionaireGame(root)
     root.mainloop()
