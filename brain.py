@@ -1,10 +1,9 @@
 import tkinter as tk
 from tkinter.ttk import Progressbar
-# from questions import *
+from questions import *
 from progress import QuizResultWindow, SoundPlayer, VoicePlayer
 import random
 from pygame import mixer
-from que import *
 
 
 class MillionaireGame:
